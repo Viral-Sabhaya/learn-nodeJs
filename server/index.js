@@ -7,6 +7,8 @@ const server = http.createServer((req, res) => {
     res.end("hii this is my first nodejs server");
   } else if (req.url == "/data") {
     res.end("hii this is my first data page server");
+  } else if (req.url == "/about") {
+    res.end("hii this is my about page server");
   } else {
     res.end("page not found!!");
   }
