@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require("path");
+// const path = require("path");
 const app = express();
 const port = 3000;
 
@@ -23,7 +23,9 @@ app.get("/home", (req, res) => {
 });
 
 app.get("/download", (req, res) => {
-  // res.download(`${pathDir}/index.html`);
+  res.render("dowland", {
+    title: "dowland",
+  });
 });
 
 app.listen(port, () => {
