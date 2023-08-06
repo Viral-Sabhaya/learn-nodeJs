@@ -10,8 +10,60 @@ const user = require("./connection");
 // PUT/(PATCH) ==> Update data to database
 // DELETE ==> Delete data from to database
 
-app.get("/", (req, res) => {
-  res.send("hello");
+// app.get("/", (req, res) => {
+//   res.send("hello");
+// });
+app.use(express.json());
+
+app.post("/", async (req, res) => {
+  try {
+    const senData = new user(req.body);
+    const saveData = await senData.save();
+    res.send(saveData);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
+
+app.get("/user", async (req, res) => {
+  try {
+    const getData = await user.find({});
+    res.send(getData);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
+
+app.delete("/user/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deleteData = await user.findOneAndDelete({ _id: id });
+    res.send(deleteData);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.post("/user/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updateData = await user.findByIdAndUpdate({ _id: id }, req.body, {
+      new: true,
+    });
+    res.send(updateData);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+app.get("/user/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const getIdData = await user.findById({ _id: id });
+    res.send(getIdData);
+  } catch (error) {
+    res.status(404).send(error);
+  }
 });
 
 app.listen(port, () => {
