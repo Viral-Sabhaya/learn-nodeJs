@@ -11,7 +11,6 @@ const user = require("./connection");
 // DELETE ==> Delete data from to database
 
 app.get("/", (req, res) => {
-  console.log(req);
   res.send("hello");
 });
 
