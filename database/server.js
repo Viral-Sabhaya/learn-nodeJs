@@ -13,7 +13,18 @@ const user = require("./connection");
 // app.get("/", (req, res) => {
 //   res.send("hello");
 // });
+
 app.use(express.json());
+
+app.post("/login", async (req, res) => {
+  try {
+    const userEmail = req.body.email;
+    const getEmail = await user.findOne({ email: userEmail });
+    res.send(getEmail);
+  } catch (error) {
+    res.status(404).send(error);
+  }
+});
 
 app.post("/", async (req, res) => {
   try {
@@ -44,7 +55,7 @@ app.delete("/user/:id", async (req, res) => {
   }
 });
 
-app.post("/user/:id", async (req, res) => {
+app.put("/user/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const updateData = await user.findByIdAndUpdate({ _id: id }, req.body, {
